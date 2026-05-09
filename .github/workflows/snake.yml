@@ -1,0 +1,48 @@
+name: Generate Snake Animation
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snake-profile-assets
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build snake SVGs from contribution graph
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: CircuitFae
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+
+      - name: Publish SVGs on default branch for profile readme
+        run: |
+          mkdir -p profile-assets
+          cp -f dist/github-snake.svg profile-assets/
+          cp -f dist/github-snake-dark.svg profile-assets/
+          ls -la profile-assets/
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile-assets/github-snake.svg profile-assets/github-snake-dark.svg
+          if git diff --staged --quiet; then
+            echo "No changes to snake files."
+          else
+            git commit -m "chore: refresh contribution snake for profile readme"
+            git push
+          fi
