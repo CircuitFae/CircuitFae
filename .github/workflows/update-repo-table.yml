@@ -1,0 +1,34 @@
+name: Update repo constellation
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: readme-repo-table
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate repo table from GitHub API
+        run: python scripts/update_repo_table.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --staged --quiet; then
+            echo "Repo table already up to date."
+          else
+            git commit -m "chore: refresh repo constellation from GitHub API"
+            git push
+          fi

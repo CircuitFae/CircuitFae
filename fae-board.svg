@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Animated tic-tac-toe board, CircuitFae theme">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0d2b"/>
+      <stop offset="100%" stop-color="#1a0533"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style type="text/css"><![CDATA[
+      @keyframes pulseX {
+        0%, 100% { opacity: 0.55; transform: scale(0.92); }
+        50% { opacity: 1; transform: scale(1.08); }
+      }
+      @keyframes pulseO {
+        0%, 100% { opacity: 0.5; stroke-width: 3; }
+        50% { opacity: 1; stroke-width: 4.5; }
+      }
+      @keyframes winLine {
+        0% { stroke-dashoffset: 120; opacity: 0; }
+        30% { opacity: 1; }
+        100% { stroke-dashoffset: 0; opacity: 1; }
+      }
+      .mark-x { fill: #f0abfc; filter: url(#glow); transform-box: fill-box; transform-origin: center; animation: pulseX 2s ease-in-out infinite; }
+      .mark-o { fill: none; stroke: #b57bff; filter: url(#glow); transform-box: fill-box; transform-origin: center; animation: pulseO 2.2s ease-in-out 0.4s infinite; }
+      .win { stroke: #fcd34d; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 120; animation: winLine 3s ease-out 1.5s infinite; }
+    ]]></style>
+  </defs>
+  <rect width="200" height="200" rx="12" fill="url(#bg)" stroke="#7c3aed" stroke-opacity="0.45"/>
+  <!-- grid -->
+  <g stroke="#7c3aed" stroke-opacity="0.55" stroke-width="2">
+    <line x1="68" y1="24" x2="68" y2="176"/>
+    <line x1="132" y1="24" x2="132" y2="176"/>
+    <line x1="24" y1="68" x2="176" y2="68"/>
+    <line x1="24" y1="132" x2="176" y2="132"/>
+  </g>
+  <!-- winning diagonal -->
+  <line class="win" x1="36" y1="36" x2="164" y2="164"/>
+  <!-- X top-left -->
+  <g transform="translate(46,46)">
+    <path class="mark-x" d="M0 0 L26 26 M26 0 L0 26" stroke="#f0abfc" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- O top-center -->
+  <circle class="mark-o" cx="100" cy="46" r="14"/>
+  <!-- X top-right -->
+  <g transform="translate(128,46)">
+    <path class="mark-x" d="M0 0 L26 26 M26 0 L0 26" stroke="#f0abfc" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- O mid-left -->
+  <circle class="mark-o" cx="46" cy="100" r="14"/>
+  <!-- X center -->
+  <g transform="translate(87,87)">
+    <path class="mark-x" d="M0 0 L26 26 M26 0 L0 26" stroke="#f0abfc" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- O mid-right -->
+  <circle class="mark-o" cx="154" cy="100" r="14"/>
+  <!-- O bottom-left -->
+  <circle class="mark-o" cx="46" cy="154" r="14"/>
+  <!-- X bottom-center -->
+  <g transform="translate(87,128)">
+    <path class="mark-x" d="M0 0 L26 26 M26 0 L0 26" stroke="#f0abfc" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- O bottom-right -->
+  <circle class="mark-o" cx="154" cy="154" r="14"/>
+  <text x="100" y="196" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8" fill="#b57bff" opacity="0.85">X WINS � CIRCUITFAE</text>
+</svg>
